@@ -1,0 +1,11 @@
+# JS
+node_modules/
+yarn.lock
+yarn-error.log
+
+# OS, IDE
+.DS_Store
+.idea
+
+# Others
+build/
