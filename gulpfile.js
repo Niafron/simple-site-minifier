@@ -4,18 +4,19 @@
 //--------> requires
 
 const configuration = require('./configuration'),
+    cssnano = require('cssnano'),
     del = require('del'),
+    fancyLog = require('fancy-log'),
     gulp = require('gulp'),
+    gulpBabel = require('gulp-babel'),
+    gulpConcat = require('gulp-concat'),
+    gulpHtmlmin = require('gulp-htmlmin'),
+    gulpHtmlReplace = require('gulp-html-replace'),
     gulpImagemin = require('gulp-imagemin'),
     gulpNewer = require('gulp-newer'),
     gulpPlumber = require('gulp-plumber'),
-    gulpUglify = require('gulp-uglify'),
-    gulpBabel = require('gulp-babel'),
-    gulpConcat = require('gulp-concat'),
     gulpPostcss = require('gulp-postcss'),
-    cssnano = require('cssnano'),
-    gulpHtmlReplace = require('gulp-html-replace'),
-    gulpHtmlmin = require('gulp-htmlmin');
+    gulpUglify = require('gulp-uglify');
 
 
 //--------> basic recipes
@@ -71,10 +72,24 @@ const htmlBuild = () => gulp
     .pipe(gulpHtmlmin({ collapseWhitespace: true }))
     .pipe(gulp.dest(`./${configuration.buildDir}`));
 
+const copyFileToBuildDirectory = () => {
+    if (configuration.filesToCopyToBuildDirectory.length > 0) {
+        fancyLog(`copyFileToBuildDirectory :: ${configuration.filesToCopyToBuildDirectory.length} file to copy`);
+        return gulp
+            .src(configuration.filesToCopyToBuildDirectory)
+            .pipe(gulp.dest(`./${configuration.buildDir}`));
+    }
+
+    return new Promise((resolve, reject) => {
+        fancyLog('copyFileToBuildDirectory :: 0 file to copy');
+        resolve();
+    });
+};
+
 
 //-------- define complex recipes
 
-const build = gulp.series(clear, gulp.parallel(imagesBuild, cssBuild, jsBuild, htmlBuild));
+const build = gulp.series(clear, gulp.parallel(imagesBuild, cssBuild, jsBuild, htmlBuild, copyFileToBuildDirectory));
 
 
 //-------- export tasks
@@ -85,4 +100,5 @@ exports.imagesBuild = imagesBuild;
 exports.cssBuild = cssBuild;
 exports.jsBuild = jsBuild;
 exports.htmlBuild = htmlBuild;
+exports.copyFileToBuildDirectory = copyFileToBuildDirectory;
 exports.default = build;

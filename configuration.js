@@ -5,5 +5,6 @@ module.exports = {
     buildDir: 'build',
     assetsBuildDir: `build/assets`,
     jsAllFile: 'all.js',
-    cssAllFile: 'all.css'
+    cssAllFile: 'all.css',
+    filesToCopyToBuildDirectory: []
 };
