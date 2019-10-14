@@ -1,9 +1,10 @@
 'use strict';
 
 
-//--------> plugins
+//--------> requires
 
-const del = require('del'),
+const configuration = require('./configuration'),
+    del = require('del'),
     gulp = require('gulp'),
     gulpImagemin = require('gulp-imagemin'),
     gulpNewer = require('gulp-newer'),
@@ -17,22 +18,13 @@ const del = require('del'),
     gulpHtmlmin = require('gulp-htmlmin');
 
 
-//--------> define vars
-
-const assetsDir = 'assets',
-    buildDir = 'build',
-    assetsBuildDir = `${buildDir}/${assetsDir}`,
-    jsAllFile = 'all.js',
-    cssAllFile = 'all.css';
-
-
 //--------> basic recipes
 
-const clear = () => del([`./${buildDir}/*`]);
+const clear = () => del([`./${configuration.buildDir}/*`]);
 
 const imagesBuild = () => gulp
-    .src(`./${assetsDir}/images/**/*`)
-    .pipe(gulpNewer(`./${assetsBuildDir}/images`))
+    .src(`./${configuration.assetsDir}/images/**/*`)
+    .pipe(gulpNewer(`./${configuration.assetsBuildDir}/images`))
     .pipe(
         gulpImagemin([
             gulpImagemin.gifsicle({ interlaced: true }),
@@ -48,16 +40,16 @@ const imagesBuild = () => gulp
             })
         ])
     )
-    .pipe(gulp.dest(`./${assetsBuildDir}/images`));
+    .pipe(gulp.dest(`./${configuration.assetsBuildDir}/images`));
 
 const cssBuild = () => gulp
-    .src(`./${assetsDir}/css/**/*.css`)
-    .pipe(gulpConcat(cssAllFile))
+    .src(`./${configuration.assetsDir}/css/**/*.css`)
+    .pipe(gulpConcat(configuration.cssAllFile))
     .pipe(gulpPostcss([cssnano()]))
-    .pipe(gulp.dest(`./${assetsBuildDir}/css`));
+    .pipe(gulp.dest(`./${configuration.assetsBuildDir}/css`));
 
 const jsBuild = () => gulp
-    .src(`./${assetsDir}/js/**/*.js`)
+    .src(`./${configuration.assetsDir}/js/**/*.js`)
     .pipe(gulpPlumber())
     .pipe(gulpBabel({
         presets: [
@@ -66,18 +58,18 @@ const jsBuild = () => gulp
             }]
         ]
     }))
-    .pipe(gulpConcat(jsAllFile))
+    .pipe(gulpConcat(configuration.jsAllFile))
     .pipe(gulpUglify())
-    .pipe(gulp.dest(`./${assetsBuildDir}/js`));
+    .pipe(gulp.dest(`./${configuration.assetsBuildDir}/js`));
 
 const htmlBuild = () => gulp
     .src('*.html')
     .pipe(gulpHtmlReplace({
-        js: `${assetsDir}/js/${jsAllFile}`,
-        css: `${assetsDir}/css/${cssAllFile}`
+        js: `${configuration.assetsDir}/js/${configuration.jsAllFile}`,
+        css: `${configuration.assetsDir}/css/${configuration.cssAllFile}`
     }))
     .pipe(gulpHtmlmin({ collapseWhitespace: true }))
-    .pipe(gulp.dest(`./${buildDir}`));
+    .pipe(gulp.dest(`./${configuration.buildDir}`));
 
 
 //-------- define complex recipes
