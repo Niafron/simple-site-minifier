@@ -58,7 +58,7 @@ const imagesBuild = () => {
         ])
     )
     .pipe(gulp.dest(imagesDest));
-}
+};
 
 const cssBuild = () => {
   fancyLog.warn(`cssBuild ===> FROM ${cssSrc} TO ${cssDest}`);
@@ -66,7 +66,7 @@ const cssBuild = () => {
     .pipe(gulpConcat(configuration.buildFileCss))
     .pipe(gulpPostcss([cssnano()]))
     .pipe(gulp.dest(cssDest));
-}
+};
 
 const jsBuild = () => {
   fancyLog.warn(`jsBuild ===> FROM ${jsSrc} TO ${jsDest}`);
@@ -82,7 +82,7 @@ const jsBuild = () => {
     .pipe(gulpConcat(configuration.buildFileJs))
     .pipe(gulpUglify())
     .pipe(gulp.dest(jsDest));
-}
+};
 
 const htmlBuild = () => {
   fancyLog.warn(`htmlBuild ===> FROM ${htmlSrc} TO ${htmlDest}`);
@@ -93,7 +93,7 @@ const htmlBuild = () => {
     }))
     .pipe(gulpHtmlmin({ collapseWhitespace: true }))
     .pipe(gulp.dest(htmlDest));
-}
+};
 
 const copyFileToBuildDir = () => {
     if (configuration.filesToCopyToBuildDir.size > 0) {
