@@ -1,16 +1,13 @@
 {
-  "name": "niafron-portfolio",
+  "name": "simple-site-minifier",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Niafron/portfolio"
+    "url": "https://github.com/Niafron/simple-site-minifier"
   },
   "scripts": {},
   "dependencies": {
-    "font-awesome": "^4.7.0"
-  },
-  "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
     "cssnano": "^4.1.10",
@@ -25,6 +22,8 @@
     "gulp-newer": "^1.4.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
+    "gulp-replace": "^1.0.0",
     "gulp-uglify": "^3.0.2"
-  }
+  },
+  "devDependencies": {}
 }

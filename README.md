@@ -7,3 +7,5 @@
 #### h4
 
 Say something interesting here
+
+`./node_modules/.bin/gulp`
