@@ -1,5 +1,6 @@
 {
   "name": "simple-site-minifier",
+  "description": "Simply reduce your website size (css, js, images, ...) with Gulp.js",
   "version": "0.0.0",
   "license": "UNLICENSED",
   "repository": {
